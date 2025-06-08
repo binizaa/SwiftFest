@@ -23,7 +23,7 @@ struct HomeView: View {
                     .tag(Tab.register)
                     .toolbar(.hidden, for: .tabBar)
                 
-                CaptureMealView()
+                DiabetesProfileView()
                     .tag(Tab.profile)
                     .toolbar(.hidden, for: .tabBar)
                 
