@@ -9,52 +9,22 @@ import SwiftUI
 import CoreML
 
 struct ContentView: View {
-    @State private var selectedImage: UIImage?
-    @State private var isPickerPresented = false
-    @State private var predictionLabel: String = ""
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
 
-    var body: some View {
-        VStack {
-            Button("Seleccionar Imagen") {
-                isPickerPresented = true
-            }
+    @State private var animateTransition = false
 
-            if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 300)
-                    .padding()
-
-                Button("Predecir imagen") {
-                    classifyImage(image)
+        var body: some View {
+            ZStack {
+                if hasSeenOnboarding {
+                    HomeView()
+                        .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
+                } else {
+                    StartView()
+                        .transition(.asymmetric(insertion: .opacity, removal: .move(edge: .leading)))
                 }
             }
-
-            if !predictionLabel.isEmpty {
-                Text("Resultado: \(predictionLabel)")
-            }
+            .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         }
-        .sheet(isPresented: $isPickerPresented) {
-            ImagePicker(image: $selectedImage)
-        }
-        .padding()
-    }
-
-    func classifyImage(_ image: UIImage) {
-        guard let buffer = image.toCVPixelBuffer(width: 299, height: 299) else {
-            print("No se pudo convertir la imagen")
-            return
-        }
-
-        do {
-            let model = try food(configuration: MLModelConfiguration())
-            let result = try model.prediction(image: buffer)
-            predictionLabel = result.classLabel
-        } catch {
-            print("Error en la predicción: \(error.localizedDescription)")
-        }
-    }
 }
 
 
