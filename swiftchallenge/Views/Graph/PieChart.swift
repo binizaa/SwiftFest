@@ -14,8 +14,7 @@ struct PieChart: View {
     
     var body: some View {
         VStack (spacing: 0){
-            Text("Indice de Glucosa")
-                .font(.headline)
+            
             
             Chart {
                 ForEach(resultado) { category in
@@ -34,6 +33,9 @@ struct PieChart: View {
                 "bajo": .green,
                 "medio": .yellow,
             ])
+            
+            Text("Indice de Glucosa")
+                .font(.headline)
         }
     }
 }

@@ -22,13 +22,26 @@ struct ChatBotView: View {
 
     var body: some View {
         VStack {
-            Text("Gluco IA")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding()
-
+            
+            HStack {
+                
+                Image("gotaPrincipal")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    
+                Text("Gluco IA")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                   
+            }
+            
+            
             ScrollView {
+              
+                    
                 LazyVStack(alignment: .leading, spacing: 10) {
+                    
+                    
                     ForEach(messages.indices, id: \.self) { index in
                         let (message, isUser) = messages[index]
                         MessageBubble(message: message, isUser: isUser)
@@ -82,6 +95,7 @@ Usuario: \(userInput)
             .padding(.horizontal)
             .padding(.bottom)
         }
+        
         .background(Color.white.ignoresSafeArea())
     }
 }

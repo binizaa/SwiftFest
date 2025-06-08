@@ -11,8 +11,7 @@ import Charts
 struct XYChart: View {
     var body: some View {
         VStack (spacing: 0){
-            Text("Niveles de Glucosa")
-                .font(.headline)
+            
             
             Chart(glucoseData) { reading in
                 LineMark(
@@ -24,6 +23,9 @@ struct XYChart: View {
             }
             .modifier(AxisModifier(title: "Línea"))
             .padding()
+            
+            Text("Niveles de Glucosa")
+                .font(.headline)
         }
     }
 }

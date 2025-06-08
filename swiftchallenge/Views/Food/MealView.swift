@@ -23,7 +23,31 @@ struct MealView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack (spacing: 10) {
+                
+                VStack (spacing: 5) {
+                    
+                    ZStack {
+                        
+                        LinearGradient(
+                            colors: [Color.red.opacity(0.3), Color.white],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        .ignoresSafeArea()
+                        .frame(height: 400)
+                        
+                        VStack(spacing: 30) {
+                            Spacer()
+                            
+                            Image("glu")
+                                .resizable()
+                                .frame(width: 200, height: 200)
+                                .shadow(radius: 10)
+                            
+                            
+                            Spacer()
+                        }
+                    }
                     
                     HStack{
                         Spacer()
@@ -33,22 +57,26 @@ struct MealView: View {
                     .
                     padding()
                     
+                    
+                
+                    
                     Divider()
+                        .padding()
                     
     
-                    Text("Tus estadísticas")
+                
+                    Text("Tus Estadísticas")
                         .font(.title)
                         .fontWeight(.bold)
-                    
+                        
                     TabView {
                         XYChart()
                         PieChart()
                     }
-                    .frame(width: 380, height: 450)
+                    .frame(width: 380, height: 400)
                     .tabViewStyle(.page)
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
-                    .padding(.vertical)
-                    
+
                     
                     Divider()
                     
@@ -57,7 +85,7 @@ struct MealView: View {
                         .fontWeight(.bold)
                         .padding()
                     
-                    LazyVStack (spacing: 20){
+                    LazyVStack (spacing: 30){
                         ForEach(meals) { meal in
                             
                             Button {
@@ -74,7 +102,7 @@ struct MealView: View {
                             }
                     
                 }
-            }
+            }.ignoresSafeArea()
         }
     }
 }
@@ -133,6 +161,7 @@ struct GlucoseSummaryView: View {
             GlucoseCard(days: 14, average: 116)
             GlucoseCard(days: 30, average: 113)
         }
+      
         .padding(.horizontal)
     }
 }

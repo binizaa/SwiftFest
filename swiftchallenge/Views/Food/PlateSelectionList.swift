@@ -22,10 +22,12 @@ struct PlateSelectionList: View {
                     Section {
                         VStack(alignment: .center) {
                             Text("Meal Plan")
-                                .font(.largeTitle)
+                                .font(.title)
+                                .fontWeight(.black)
                                 .padding(.top)
                             
                             Text("Es hora de planificar tu plato de hoy.")
+                            Text("Come primero los alimentos etiqeuetados con un color verde, despues los naranjas y finalmente los rojos.")
                                 .foregroundStyle(.gray)
                             
                             Image("gotaChart")
@@ -70,10 +72,15 @@ struct PlateSelectionList: View {
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(10)
+                    
                 }
             }
             .navigationBarBackButtonHidden(true)
         }
+    }
+    
+    func update(){
+        
     }
 }
 
