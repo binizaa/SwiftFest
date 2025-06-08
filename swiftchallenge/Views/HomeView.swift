@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-
     @State private var activeTab: Tab = .home
     @Namespace private var animation
 
