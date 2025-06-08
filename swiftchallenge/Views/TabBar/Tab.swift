@@ -10,17 +10,21 @@ import SwiftUI
 /// App Tab's
 enum Tab: String, CaseIterable {
     case home = "Home"
-    case services = "Services"
-    case activity = "Activity"
+    case profile = "Profile"
+    case chat = "Chat"
+    case register = "Register"
+    
     
     var systemImage: String {
         switch self {
-        case .services:
-            return "envelope.open.badge.clock"
         case .home:
             return "house"
-        case .activity:
-            return "bell"
+        case .chat:
+            return "message"
+        case .profile:
+            return "person.circle"
+        case .register:
+            return "plus"
         }
     }
     

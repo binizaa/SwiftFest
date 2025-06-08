@@ -16,18 +16,21 @@ struct HomeView: View {
         VStack(spacing: 0){
             TabView(selection: $activeTab) {
                 MealView()
-                    .tag(Tab.services)
-                    /// Hiding Native Tab Bar
-                    .toolbar(.hidden, for: .tabBar)
-                
-                CaptureMealView()
                     .tag(Tab.home)
                     /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
                 
+                CaptureMealView()
+                    .tag(Tab.register)
+                    /// Hiding Native Tab Bar
+                    .toolbar(.hidden, for: .tabBar)
                 
-                Text("Activity")
-                    .tag(Tab.activity)
+                mealUploader()
+                    .tag(Tab.profile)
+                    .toolbar(.hidden, for: .tabBar)
+                
+                ChatBotView()
+                    .tag(Tab.chat)
                     /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
             }
