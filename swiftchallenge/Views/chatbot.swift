@@ -74,7 +74,7 @@ Usuario: \(userInput)
                     Image(systemName: "paperplane.fill")
                         .foregroundColor(.white)
                         .padding(12)
-                        .background(Color.blue)
+                        .background(Color("Blue"))
                         .clipShape(Circle())
                         .shadow(radius: 2)
                 }
@@ -94,7 +94,7 @@ struct MessageBubble: View {
         Text(message)
             .padding()
             .foregroundColor(.white)
-            .background(isUser ? Color(.systemGray4) : Color.blue)
+            .background(isUser ? Color(.systemGray4) : Color("Blue"))
             .cornerRadius(15)
             .frame(maxWidth: 300, alignment: isUser ? .trailing : .leading)
     }

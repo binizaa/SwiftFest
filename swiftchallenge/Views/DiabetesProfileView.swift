@@ -24,7 +24,7 @@ struct DiabetesProfileView: View {
                 } label: {
                     Image(systemName: "pencil.circle.fill")
                         .font(.title2)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color("Blue"))
                 }
                 .offset(x: 8, y: 8)
             }
@@ -34,8 +34,9 @@ struct DiabetesProfileView: View {
                     .font(.title2)
                     .fontWeight(.bold)
                 Text("biniza@email.com")
-                    .foregroundColor(.gray)
                     .font(.subheadline)
+                    .foregroundColor(.gray)
+                    
             }
 
             HStack(spacing: 20) {
