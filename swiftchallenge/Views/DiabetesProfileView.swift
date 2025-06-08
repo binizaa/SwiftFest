@@ -11,7 +11,18 @@ struct DiabetesProfileView: View {
     var body: some View {
         VStack(spacing: 24) {
 
-            ZStack(alignment: .bottomTrailing) {
+            ZStack(alignment: .top) {
+                
+                LinearGradient(
+                                   colors: [Color.red.opacity(0.7), Color.red.opacity(0.2)],
+                                   startPoint: .topLeading,
+                                   endPoint: .bottomTrailing
+                )
+                .frame(height: 200) 
+                .clipShape(RoundedRectangle(cornerRadius: 40, style: .continuous))
+                .offset(y: -30)
+
+                
                 Image(systemName: "person.circle.fill")
                     .resizable()
                     .scaledToFill()
@@ -20,13 +31,7 @@ struct DiabetesProfileView: View {
                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                     .shadow(radius: 10)
 
-                Button {
-                } label: {
-                    Image(systemName: "pencil.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(Color("Blue"))
-                }
-                .offset(x: 8, y: 8)
+
             }
 
             VStack(spacing: 4) {

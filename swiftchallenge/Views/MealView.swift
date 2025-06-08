@@ -23,10 +23,22 @@ struct MealView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack (alignment: .leading, spacing: 0) {
-                    HeaderView()
-                        .padding(.horizontal)
+                VStack (spacing: 10) {
                     
+                    HStack{
+                        Spacer()
+                        GlucoseSummaryView()
+                        Spacer()
+                    }
+                    .
+                    padding()
+                    
+                    Divider()
+                    
+    
+                    Text("Tus estadísticas")
+                        .font(.title)
+                        .fontWeight(.bold)
                     
                     TabView {
                         XYChart()
@@ -110,15 +122,51 @@ let meals = [
             Nutrient(name: "Fats", amount: "15g"),
             Nutrient(name: "Carbs", amount: "15g")
         ]
-    ),
-    
-    Meal(name: "Sopa de verduras", calories: 120, imageName: "sopa",
-         nutrients: [
-         Nutrient(name: "Calories", amount: "300"),
-         Nutrient(name: "Proteins", amount: "20g"),
-         Nutrient(name: "Fats", amount: "15g"),
-         Nutrient(name: "Carbs", amount: "15g")
-                                                                                                ])
+    )
 ]
 
 
+struct GlucoseSummaryView: View {
+    var body: some View {
+        HStack(spacing: 16) {
+            GlucoseCard(days: 07, average: 110)
+            GlucoseCard(days: 14, average: 116)
+            GlucoseCard(days: 30, average: 113)
+        }
+        .padding(.horizontal)
+    }
+}
+
+struct GlucoseCard: View {
+    let days: Int
+    let average: Int
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Text("\(days) days")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color.red.opacity(0.2))
+                .clipShape(Capsule())
+
+            VStack(spacing: 2) {
+                Text("Average")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                Text("\(average)")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                Text("mg/dL")
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding()
+        .frame(width: 100)
+        .background(Color(.systemGray6))
+        .cornerRadius(16)
+        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+    }
+}

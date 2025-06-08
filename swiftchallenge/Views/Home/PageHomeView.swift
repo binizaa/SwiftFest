@@ -14,9 +14,13 @@ struct PageHomeView: View {
         NavigationStack {
             ScrollView {
                 VStack (alignment: .leading, spacing: 0) {
-                    HeaderView()
-                        .padding(.horizontal)
+            
+                    Divider()
                     
+                    Text("Tus estadísticas")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
                     
                     TabView {
                         XYChart()
@@ -30,7 +34,7 @@ struct PageHomeView: View {
                     
                     Divider()
                     
-                    Text("Past Meals")
+                    Text("Comidas recientes")
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
