@@ -14,12 +14,25 @@ struct PageHomeView: View {
                 HeaderView()
                     .padding(.horizontal)
                 
+                
+                TabView {
+                    XYChart()
+                    PieChart()
+                }
+                .frame(width: 380, height: 450)
+                .tabViewStyle(.page)
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                
+                LazyVStack{
+                    Text("aqui va otra cosa :D")
+                }
+                
             }
         }
     }
 }
 
 #Preview {
-    HomeView()
+    PageHomeView()
 }
 
