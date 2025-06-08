@@ -13,17 +13,21 @@ struct HCard: View {
         HStack(spacing: 20) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(selection.title)
-                    .font(.custom("Poppind-Bold", size: 28))
+                    .font(.custom("Poppins-Bold", size: 28))
+                    .fontWeight(.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(selection.caption)
                     
             }
             Divider()
             selection.image
+                .resizable()
+                .frame(width: 60, height: 50)
+                
             //image
         }
         .padding(30)
-        .frame(maxWidth: .infinity, maxHeight: 110)
+        .frame(maxWidth: .infinity, maxHeight: 150)
         .foregroundColor(.white)
         .background(selection.color)
         .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
