@@ -26,7 +26,6 @@ class LogMealUploader {
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
-        // 🔻 Redimensionar y comprimir imagen
         let resizedImage = imagen.reescalar(nuevoAncho: 600)
         guard let imageData = resizedImage.jpegData(compressionQuality: 0.5) else {
             print("❌ No se pudo convertir la imagen a JPEG")
@@ -113,7 +112,8 @@ class LogMealUploader {
                    let nombre = mejor["name"] as? String,
                    let familias = mejor["foodFamily"] as? [[String: Any]],
                    let familia = familias.first?["name"] as? String {
-                    let alimento = AlimentoDetectado(nombre: nombre, familia: familia, glycemyIndex: 0.0)
+                    
+                    let alimento = AlimentoDetectado(nombre: nombre, familia: familia, glycemyIndex: 0.0, glycemicLoad: 0.0)
                     alimentosDetectados.insert(alimento)
                 }
             }
@@ -121,16 +121,27 @@ class LogMealUploader {
             let lista = Array(alimentosDetectados)
 
             GeminiService.shared.completarGlycemyIndex(para: lista) { completados in
-                let ordenados = completados.sorted { $0.glycemyIndex < $1.glycemyIndex }
+                let final = completados.map { alimento in
+                    let carbs = 15.0 // ← Puedes cambiarlo si tienes datos reales por alimento
+                    let load = (alimento.glycemyIndex * carbs) / 100.0
+                    return AlimentoDetectado(
+                        nombre: alimento.nombre,
+                        familia: alimento.familia,
+                        glycemyIndex: alimento.glycemyIndex,
+                        glycemicLoad: load
+                    )
+                }
+
+                let ordenados = final.sorted { $0.glycemyIndex < $1.glycemyIndex }
                 completion(ordenados)
             }
-
 
         } catch {
             print("Error al parsear JSON: \(error)")
             completion([])
         }
     }
+
 }
 
 // MARK: - Extensión para redimensionar imagen

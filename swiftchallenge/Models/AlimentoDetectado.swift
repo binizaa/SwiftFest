@@ -11,5 +11,6 @@ struct AlimentoDetectado: Hashable {
     let nombre: String
     let familia: String
     var glycemyIndex: Double
+    var glycemicLoad: Double?
 }
 
