@@ -6,6 +6,7 @@
 // d
 
 import SwiftUI
+import CoreML
 
 struct ContentView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
@@ -25,6 +26,7 @@ struct ContentView: View {
             .animation(.easeInOut(duration: 0.5), value: hasSeenOnboarding)
         }
 }
+
 
 #Preview {
     ContentView()
