@@ -15,9 +15,9 @@ struct FoodData: Identifiable {
 }
 
 func getColor(glucymeIndex: Double) -> Color {
-    if glucymeIndex < 5 {
+    if glucymeIndex <= 55 {
         return .green
-    } else if glucymeIndex < 15 {
+    } else if glucymeIndex <= 69 {
         return .orange
     } else {
         return .red
