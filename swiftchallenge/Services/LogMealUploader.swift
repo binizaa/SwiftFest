@@ -14,6 +14,7 @@ class LogMealUploader {
 
     static func enviarImagen(_ imagen: UIImage, completion: @escaping ([AlimentoDetectado]) -> Void) {
         guard let url = URL(string: endpoint) else {
+            print("❌ URL inválida")
             completion([])
             return
         }
@@ -25,28 +26,53 @@ class LogMealUploader {
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
-        guard let imageData = imagen.jpegData(compressionQuality: 0.8) else {
+        // 🔻 Redimensionar y comprimir imagen
+        let resizedImage = imagen.reescalar(nuevoAncho: 600)
+        guard let imageData = resizedImage.jpegData(compressionQuality: 0.5) else {
+            print("❌ No se pudo convertir la imagen a JPEG")
             completion([])
             return
         }
 
         request.httpBody = construirBody(imagenData: imageData, boundary: boundary)
 
+        print("📤 Enviando solicitud a: \(url)")
+        print("🧾 Headers: \(request.allHTTPHeaderFields ?? [:])")
+
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error: \(error)")
+                print("❌ Error de red: \(error.localizedDescription)")
                 completion([])
                 return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("❌ No se recibió una respuesta HTTP válida")
+                completion([])
+                return
+            }
+
+            print("✅ Código de estado HTTP: \(httpResponse.statusCode)")
+            if httpResponse.statusCode != 200 {
+                print("❗ Respuesta inesperada del servidor")
             }
 
             guard let data = data else {
-                print("No se recibió data")
+                print("❌ No se recibió cuerpo de respuesta")
                 completion([])
                 return
             }
 
-            let alimentos = procesarRespuesta(data: data)
-            completion(alimentos)
+            if let responseText = String(data: data, encoding: .utf8) {
+                print("📦 Cuerpo de respuesta:")
+                print(responseText)
+            } else {
+                print("⚠️ No se pudo convertir el cuerpo a texto")
+            }
+
+            procesarRespuesta(data: data) { alimentosConIndice in
+                completion(alimentosConIndice)
+            }
         }.resume()
     }
 
@@ -65,12 +91,13 @@ class LogMealUploader {
         return body
     }
 
-    private static func procesarRespuesta(data: Data) -> [AlimentoDetectado] {
+    private static func procesarRespuesta(data: Data, completion: @escaping ([AlimentoDetectado]) -> Void) {
         do {
             guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let segmentos = json["segmentation_results"] as? [[String: Any]] else {
                 print("Respuesta no válida o vacía.")
-                return []
+                completion([])
+                return
             }
 
             var alimentosDetectados = Set<AlimentoDetectado>()
@@ -91,10 +118,34 @@ class LogMealUploader {
                 }
             }
 
-            return Array(alimentosDetectados)
+            let lista = Array(alimentosDetectados)
+
+            GeminiService.shared.completarGlycemyIndex(para: lista) { completados in
+                let ordenados = completados.sorted { $0.glycemyIndex < $1.glycemyIndex }
+                completion(ordenados)
+            }
+
+
         } catch {
             print("Error al parsear JSON: \(error)")
-            return []
+            completion([])
         }
+    }
+}
+
+// MARK: - Extensión para redimensionar imagen
+
+extension UIImage {
+    func reescalar(nuevoAncho: CGFloat) -> UIImage {
+        let escala = nuevoAncho / self.size.width
+        let nuevoAlto = self.size.height * escala
+        let tamañoNuevo = CGSize(width: nuevoAncho, height: nuevoAlto)
+
+        UIGraphicsBeginImageContextWithOptions(tamañoNuevo, false, 1.0)
+        self.draw(in: CGRect(origin: .zero, size: tamañoNuevo))
+        let imagenRedimensionada = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return imagenRedimensionada ?? self
     }
 }
