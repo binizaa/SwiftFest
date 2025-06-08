@@ -14,9 +14,10 @@ struct HCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(selection.title)
                     .font(.custom("Poppins-Bold", size: 28))
-                    .fontWeight(.black)
+                    .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(selection.caption)
+                    .font(.subheadline)
                     
             }
             Divider()
@@ -30,6 +31,7 @@ struct HCard: View {
         .frame(maxWidth: .infinity, maxHeight: 150)
         .foregroundColor(.white)
         .background(selection.color)
+//        .background(.ultraThinMaterial)
         .mask(RoundedRectangle(cornerRadius: 30, style: .continuous))
     }
     

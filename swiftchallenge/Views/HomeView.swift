@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    /// View properties
+
     @State private var activeTab: Tab = .home
     @Namespace private var animation
 
@@ -16,20 +16,16 @@ struct HomeView: View {
         
         VStack(spacing: 0){
             TabView(selection: $activeTab) {
-                Text("Home")
-                    .tag(Tab.home)
-                    /// Hiding Native Tab Bar
-                    .toolbar(.hidden, for: .tabBar)
-                
-                Text("Service")
+                MealView()
                     .tag(Tab.services)
                     /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
                 
-                Text("Partner")
-                    .tag(Tab.partners)
+                CaptureMealView()
+                    .tag(Tab.home)
                     /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
+                
                 
                 Text("Activity")
                     .tag(Tab.activity)
