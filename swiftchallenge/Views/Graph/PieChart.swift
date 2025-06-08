@@ -9,13 +9,16 @@ import SwiftUI
 import Charts
 
 struct PieChart: View {
+    
+    var resultado = agruparMealCategories(mealSummary)
+    
     var body: some View {
         VStack (spacing: 0){
             Text("Indice de Glucosa")
                 .font(.headline)
             
             Chart {
-                ForEach(mealSummary) { category in
+                ForEach(resultado) { category in
                     SectorMark(
                         angle: .value("Cantidad", category.count),
                         innerRadius: .ratio(0.5),

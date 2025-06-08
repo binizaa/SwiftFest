@@ -58,6 +58,7 @@ struct mealUploader: View {
                                         GlycemicIndex: alimento.glycemyIndex,
                                         glycemicLoad: alimento.glycemicLoad ?? 0.0
                                     )
+                                    
                                 }
                                 cargando = false
                                 navegar = true
