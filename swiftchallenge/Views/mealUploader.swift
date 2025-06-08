@@ -55,7 +55,8 @@ struct mealUploader: View {
                                     FoodData(
                                         Family: alimento.familia,
                                         Name: alimento.nombre,
-                                        GlycemicIndex: alimento.glycemyIndex
+                                        GlycemicIndex: alimento.glycemyIndex,
+                                        glycemicLoad: alimento.glycemicLoad ?? 0.0
                                     )
                                 }
                                 cargando = false

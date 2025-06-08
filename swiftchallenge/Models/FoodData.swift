@@ -12,6 +12,7 @@ struct FoodData: Identifiable {
     let Family: String
     let Name: String
     let GlycemicIndex: Double
+    var glycemicLoad: Double
 }
 
 func getColor(glucymeIndex: Double) -> Color {
@@ -25,9 +26,9 @@ func getColor(glucymeIndex: Double) -> Color {
 }
 
 var meales: [FoodData] = [
-    FoodData(Family: "Vegetable", Name: "Broccoli", GlycemicIndex: 10),
-    FoodData(Family: "Fruit", Name: "Apple", GlycemicIndex: 8),
-    FoodData(Family: "Grain", Name: "White Rice", GlycemicIndex: 7),
-    FoodData(Family: "Protein", Name: "Chicken Breast", GlycemicIndex: 0),
-    FoodData(Family: "Dairy", Name: "Whole Milk", GlycemicIndex: 18)
+    FoodData(Family: "Vegetable", Name: "Broccoli", GlycemicIndex: 10, glycemicLoad: 15),
+    FoodData(Family: "Fruit", Name: "Apple", GlycemicIndex: 8, glycemicLoad: 14),
+    FoodData(Family: "Grain", Name: "White Rice", GlycemicIndex: 7, glycemicLoad: 13),
+    FoodData(Family: "Protein", Name: "Chicken Breast", GlycemicIndex: 0, glycemicLoad: 0),
+    FoodData(Family: "Dairy", Name: "Whole Milk", GlycemicIndex: 18, glycemicLoad: 26)
 ]

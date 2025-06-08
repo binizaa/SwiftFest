@@ -10,6 +10,10 @@ import SwiftUI
 struct PlateSelectionList: View {
     
     @State var mealsi: [FoodData]
+    
+    var totalGlycemicLoad: Double {
+        mealsi.reduce(80.0) { $0 + ($1.glycemicLoad) }
+    }
 
     var body: some View {
         NavigationStack {
@@ -31,6 +35,9 @@ struct PlateSelectionList: View {
                             
                             Text("Tu proxima pico aproximado será de ")
                                 .foregroundStyle(.gray)
+                            Text(String(format: "%.2f", totalGlycemicLoad))
+                                .font(.largeTitle)
+                                .foregroundColor(.red)
                         }
                         .frame(maxWidth: .infinity)
                         //                .listRowInsets(EdgeInsets()) // quitar márgenes de celda
