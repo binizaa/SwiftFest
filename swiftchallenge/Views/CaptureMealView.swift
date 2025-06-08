@@ -24,6 +24,7 @@ struct CaptureMealView: View {
                 }
             }
             .padding(20)
+            .navigationBarBackButtonHidden(true)
         }
        
     }

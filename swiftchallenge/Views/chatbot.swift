@@ -22,7 +22,7 @@ struct ChatBotView: View {
 
     var body: some View {
         VStack {
-            Text("Beta IA")
+            Text("Gluco IA")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()

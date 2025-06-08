@@ -11,10 +11,10 @@ struct FoodData: Identifiable {
     let id = UUID()
     let Family: String
     let Name: String
-    let GlycemicIndex: Int
+    let GlycemicIndex: Double
 }
 
-func getColor(glucymeIndex: Int) -> Color {
+func getColor(glucymeIndex: Double) -> Color {
     if glucymeIndex < 5 {
         return .green
     } else if glucymeIndex < 15 {
@@ -23,3 +23,11 @@ func getColor(glucymeIndex: Int) -> Color {
         return .red
     }
 }
+
+var meales: [FoodData] = [
+    FoodData(Family: "Vegetable", Name: "Broccoli", GlycemicIndex: 10),
+    FoodData(Family: "Fruit", Name: "Apple", GlycemicIndex: 8),
+    FoodData(Family: "Grain", Name: "White Rice", GlycemicIndex: 7),
+    FoodData(Family: "Protein", Name: "Chicken Breast", GlycemicIndex: 0),
+    FoodData(Family: "Dairy", Name: "Whole Milk", GlycemicIndex: 18)
+]

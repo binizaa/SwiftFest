@@ -8,13 +8,8 @@
 import SwiftUI
 
 struct PlateSelectionList: View {
-    @State private var meals: [FoodData] = [
-        FoodData(Family: "Vegetable", Name: "Broccoli", GlycemicIndex: 10),
-        FoodData(Family: "Fruit", Name: "Apple", GlycemicIndex: 8),
-        FoodData(Family: "Grain", Name: "White Rice", GlycemicIndex: 7),
-        FoodData(Family: "Protein", Name: "Chicken Breast", GlycemicIndex: 0),
-        FoodData(Family: "Dairy", Name: "Whole Milk", GlycemicIndex: 18)
-    ]
+    
+    @State var mealsi: [FoodData]
 
     var body: some View {
         NavigationStack {
@@ -33,6 +28,9 @@ struct PlateSelectionList: View {
                                 .resizable()
                                 .frame(width: 300, height: 300)
                                 .padding(.bottom)
+                            
+                            Text("Tu proxima pico aproximado será de ")
+                                .foregroundStyle(.gray)
                         }
                         .frame(maxWidth: .infinity)
                         //                .listRowInsets(EdgeInsets()) // quitar márgenes de celda
@@ -41,7 +39,7 @@ struct PlateSelectionList: View {
                         
                     }
                     
-                    ForEach(meals, id: \.id) { meal in
+                    ForEach(mealsi.sorted(by: { $0.GlycemicIndex < $1.GlycemicIndex }), id: \.id)  { meal in
                         PlateSelectionView(
                             name: meal.Name,
                             family: meal.Family,
@@ -52,26 +50,27 @@ struct PlateSelectionList: View {
                         .frame(height: 70)
                     }
                     .onDelete { indexSet in
-                        meals.remove(atOffsets: indexSet)
+                        mealsi.remove(atOffsets: indexSet)
                     }
                 }
                 .listStyle(.plain)
                 
                 Spacer(minLength: 10)
                 
-                NavigationLink(destination: HomeView()) {
-                    Text("Ir a detalles")
+                NavigationLink(destination: CaptureMealView()) {
+                    Text("Registrar mi Comida")
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(10)
                 }
             }
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
 
 
 #Preview {
-    PlateSelectionList()
+    PlateSelectionList(mealsi: meales)
 }
