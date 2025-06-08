@@ -1,22 +1,11 @@
 import SwiftUI
 import CoreML
-import GoogleGenerativeAI
 
 struct alimentosView: View {
     @State private var selectedImage: UIImage?
     @State private var isPickerPresented = false
     @State private var predictionLabel: String = ""
     @State private var ingredients: [String] = []
-    
-    let model = GenerativeModel(
-        name: "gemini-1.5-flash",
-        apiKey: APIKey.default
-    )
-    
-    struct SavedIngredients: Codable {
-        var foodName: String
-        var ingredients: [String]
-    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -71,73 +60,20 @@ struct alimentosView: View {
             let model = try food(configuration: MLModelConfiguration())
             let result = try model.prediction(image: buffer)
             predictionLabel = result.classLabel
-            fetchIngredients(for: result.classLabel)
+
+            GeminiService.shared.obtenerIngredientes(para: result.classLabel) { ingredientes in
+                self.ingredients = ingredientes
+            }
 
         } catch {
             print("Error en la predicción: \(error.localizedDescription)")
-        }
-    }
-
-    func fetchIngredients(for foodName: String) {
-        Task {
-            do {
-                let prompt = "Dime los ingredientes más comunes en un plato de \(foodName), separados por comas."
-                let response = try await model.generateContent(prompt)
-                if let text = response.text {
-                    let cleanedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let array = cleanedText
-                        .components(separatedBy: ",")
-                        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-                    DispatchQueue.main.async {
-                        self.ingredients = array
-                        saveIngredients(foodName: foodName, ingredients: array)
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.ingredients = []
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.ingredients = []
-                }
-                print("Error al obtener ingredientes: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func saveIngredients(foodName: String, ingredients: [String]) {
-        let savedData = SavedIngredients(foodName: foodName, ingredients: ingredients)
-        
-        do {
-            _ = try JSONEncoder().encode(savedData)
-            if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let fileURL = documentDirectory.appendingPathComponent("ingredients.json")
-                
-                var existingData = [SavedIngredients]()
-                
-                if FileManager.default.fileExists(atPath: fileURL.path) {
-                    let data = try Data(contentsOf: fileURL)
-                    existingData = try JSONDecoder().decode([SavedIngredients].self, from: data)
-                }
-                
-                existingData.removeAll { $0.foodName == foodName }
-                existingData.append(savedData)
-                
-                let updatedJsonData = try JSONEncoder().encode(existingData)
-                try updatedJsonData.write(to: fileURL, options: .atomic)
-                
-                print("Ingredientes guardados en: \(fileURL)")
-            }
-        } catch {
-            print("Error guardando ingredientes: \(error.localizedDescription)")
         }
     }
 }
 
 
 #Preview {
-    ContentView()
+    alimentosView()
 }
 
 

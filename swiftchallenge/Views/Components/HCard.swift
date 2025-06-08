@@ -17,6 +17,7 @@ struct HCard: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text(selection.caption)
                     .font(.subheadline)
+                
                     
             }
             Divider()
