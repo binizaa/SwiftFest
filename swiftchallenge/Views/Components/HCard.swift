@@ -52,9 +52,9 @@ struct OptionsToCapture: Identifiable {
 }
 
 var optionsToCapture = [
-    OptionsToCapture(title: "Cámara", caption: "Toma una foto de tu comida", color: Color(hex: "9CC5FF"), image: Image(systemName: "camera")),
-    OptionsToCapture(title: "Galería", caption: "Selecciona una foto de tu galería", color: Color(hex:"6E6AE8"), image: Image(systemName: "photo.on.rectangle")),
-    OptionsToCapture(title: "Audio", caption: "Cuentanos por voz lo que has comido.", color: Color(hex:"005FE7"), image: Image(systemName: "mic"))
+    OptionsToCapture(title: "Cámara", caption: "Toma una foto de tu comida", color: Color(hex: "6EA6F3"), image: Image(systemName: "camera")),
+    OptionsToCapture(title: "Galería", caption: "Selecciona una foto de tu galería", color: Color(hex:"6EA6F3"), image: Image(systemName: "photo.on.rectangle")),
+    OptionsToCapture(title: "Audio", caption: "Cuentanos por voz lo que has comido.", color: Color(hex:"6EA6F3"), image: Image(systemName: "mic"))
 ]
 
 
