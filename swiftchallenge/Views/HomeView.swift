@@ -9,7 +9,20 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack (alignment: .leading, spacing: 0) {
+                HeaderView()
+                    .padding(.horizontal)
+                
+                
+                
+//                LazyVStack {
+//                    ForEach(1 ..< 100) { _ in
+//                        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+//                    }
+//                }
+            }
+        }
     }
 }
 
