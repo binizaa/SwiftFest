@@ -13,14 +13,25 @@ struct CaptureMealView: View {
         NavigationStack {
             VStack {
                 VStack(spacing: 20) {
-                   
-                    ForEach(optionsToCapture) { section in
-                        NavigationLink(destination: mealUploader(metodo: metodoDesde(title: section.title))) {
-                            HCard(selection: section)
-                        }
-
-                        .buttonStyle(.plain)
+                    NavigationLink(destination: mealUploader(metodo: metodoDesde(title: optionsToCapture[0].title))) {
+                        HCard(selection: optionsToCapture[0])
                     }
+                    .buttonStyle(.plain)
+                   
+                    NavigationLink(destination: mealUploader(metodo: metodoDesde(title: optionsToCapture[1].title))) {
+                        HCard(selection: optionsToCapture[1])
+                    }
+                    .buttonStyle(.plain)
+                    
+                    NavigationLink(destination: RegistroPorVozView()) {
+                        HCard(selection: optionsToCapture[2])
+                    }
+                    .buttonStyle(.plain)
+                    
+                    NavigationLink(destination: ManualFoodInputView()) {
+                        HCard(selection: optionsToCapture[3])
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(20)
@@ -33,7 +44,7 @@ struct CaptureMealView: View {
         switch title {
         case "Cámara": return .camara
         case "Galería": return .galeria
-        default: return .galeria 
+        default: return .camara
         }
     }
 
