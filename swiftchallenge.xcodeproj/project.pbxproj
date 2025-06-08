@@ -15,22 +15,9 @@
 		8D0ACD4A2DF49E98002B61F9 /* swiftchallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftchallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		06FE09552DF503B90088D906 /* Exceptions for "swiftchallenge" folder in "swiftchallenge" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 8D0ACD492DF49E98002B61F9 /* swiftchallenge */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8D0ACD4C2DF49E98002B61F9 /* swiftchallenge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				06FE09552DF503B90088D906 /* Exceptions for "swiftchallenge" folder in "swiftchallenge" target */,
-			);
 			path = swiftchallenge;
 			sourceTree = "<group>";
 		};
