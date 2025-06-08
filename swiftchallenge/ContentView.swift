@@ -43,7 +43,7 @@ struct ContentView: View {
                     Text("Alimentos detectados:")
                         .font(.headline)
                     ForEach(alimentosDetectados, id: \.self) { alimento in
-                        Text("- \(alimento.nombre) (\(alimento.familia))")
+                        Text("- \(alimento.nombre) (\(alimento.familia)) - \(alimento.glycemyIndex)")
                     }
                 }
                 .padding(.top)

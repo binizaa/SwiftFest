@@ -86,7 +86,8 @@ class LogMealUploader {
                    let nombre = mejor["name"] as? String,
                    let familias = mejor["foodFamily"] as? [[String: Any]],
                    let familia = familias.first?["name"] as? String {
-                    alimentosDetectados.insert(AlimentoDetectado(nombre: nombre, familia: familia))
+                    let alimento = AlimentoDetectado(nombre: nombre, familia: familia, glycemyIndex: 0.0)
+                    alimentosDetectados.insert(alimento)
                 }
             }
 
