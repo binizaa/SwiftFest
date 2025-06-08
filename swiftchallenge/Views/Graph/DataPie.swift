@@ -1,18 +1,20 @@
-//
-//  DataPie.swift
-//  swiftchallenge
-//
-//  Created by Leoni Bernabe on 07/06/25.
-//
-
 import SwiftUI
 
-struct DataPie: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct MealCategory: Identifiable {
+    let id = UUID()
+    let tag: String
+    let count: Int
 }
 
-#Preview {
-    DataPie()
-}
+let mealSummary: [MealCategory] = [
+    MealCategory(tag: "alto", count: 5),
+    MealCategory(tag: "medio", count: 3),
+    MealCategory(tag: "bajo", count: 2)
+]
+
+let colorMap: [String: Color] = [
+    "alto": .red,
+    "medio": .yellow,
+    "bajo": .green
+]
+
