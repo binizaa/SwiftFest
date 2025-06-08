@@ -1,66 +1,62 @@
+//
+//  ContentView.swift
+//  swiftchallenge
+//
+//  Created by Kevin Garcia on 07/06/25.
+// d
+
 import SwiftUI
-import PhotosUI
+import CoreML
 
 struct ContentView: View {
-    @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImage: UIImage? = nil
-    @State private var cargando = false
-    @State private var alimentosDetectados: [AlimentoDetectado] = []
+    @State private var selectedImage: UIImage?
+    @State private var isPickerPresented = false
+    @State private var predictionLabel: String = ""
 
     var body: some View {
-        VStack(spacing: 20) {
-            if let selectedImage = selectedImage {
-                Image(uiImage: selectedImage)
+        VStack {
+            Button("Seleccionar Imagen") {
+                isPickerPresented = true
+            }
+
+            if let image = selectedImage {
+                Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 200)
-            }
-
-            PhotosPicker("Selecciona una imagen", selection: $selectedItem, matching: .images)
-
-            Button("Enviar a LogMeal") {
-                if let imagen = selectedImage {
-                    cargando = true
-                    alimentosDetectados = []  // Limpia resultados anteriores
-
-                    LogMealUploader.enviarImagen(imagen) { alimentos in
-                        DispatchQueue.main.async {
-                            alimentosDetectados = alimentos
-                            cargando = false
-                        }
-                    }
-                }
-            }
-            .disabled(selectedImage == nil || cargando)
-
-            if cargando {
-                ProgressView("Analizando imagen...")
+                    .frame(height: 300)
                     .padding()
+
+                Button("Predecir imagen") {
+                    classifyImage(image)
+                }
             }
 
-            if !alimentosDetectados.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Alimentos detectados:")
-                        .font(.headline)
-                    ForEach(alimentosDetectados, id: \.self) { alimento in
-                        Text("- \(alimento.nombre) (\(alimento.familia)) - \(alimento.glycemyIndex)")
-                    }
-                }
-                .padding(.top)
+            if !predictionLabel.isEmpty {
+                Text("Resultado: \(predictionLabel)")
             }
         }
+        .sheet(isPresented: $isPickerPresented) {
+            ImagePicker(image: $selectedImage)
+        }
         .padding()
-        .onChange(of: selectedItem) {
-            Task {
-                if let data = try? await selectedItem?.loadTransferable(type: Data.self),
-                   let uiImage = UIImage(data: data) {
-                    selectedImage = uiImage
-                    alimentosDetectados = []
-                }
-            }
+    }
+
+    func classifyImage(_ image: UIImage) {
+        guard let buffer = image.toCVPixelBuffer(width: 299, height: 299) else {
+            print("No se pudo convertir la imagen")
+            return
+        }
+
+        do {
+            let model = try food(configuration: MLModelConfiguration())
+            let result = try model.prediction(image: buffer)
+            predictionLabel = result.classLabel
+        } catch {
+            print("Error en la predicción: \(error.localizedDescription)")
         }
     }
 }
+
 
 #Preview {
     ContentView()
