@@ -8,23 +8,61 @@
 import SwiftUI
 
 
-struct MealView: View {
+//
+//  HomeView.swift
+//  swiftchallenge
+//
+//  Created by Wendy Sanchez Cortes on 07/06/25.
+//
 
+import SwiftUI
+
+struct MealView: View {
+    @State private var selectedMeal: Meal? = nil
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    ForEach(meals) { meal in
-                        NavigationLink(destination: MealDetailView(meal: meal)) {
-                            MealCard(meal: meal)
-                        }
-                        .buttonStyle(.plain)
+                VStack (alignment: .leading, spacing: 0) {
+                    HeaderView()
+                        .padding(.horizontal)
+                    
+                    
+                    TabView {
+                        XYChart()
+                        PieChart()
                     }
+                    .frame(width: 380, height: 450)
+                    .tabViewStyle(.page)
+                    .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    .padding(.vertical)
+                    
+                    
+                    Divider()
+                    
+                    Text("Past Meals")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
+                    
+                    LazyVStack (spacing: 20){
+                        ForEach(meals) { meal in
+                            
+                            Button {
+                                selectedMeal = meal
+                            } label: {
+                                MealCard(meal: meal)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .sheet(item: $selectedMeal) { meal in
+                                MealDetailView(meal: meal)
+                            }
+                    
                 }
-                .padding()
             }
-            .navigationTitle("Historial de comidas")
-
         }
     }
 }
@@ -32,6 +70,8 @@ struct MealView: View {
 #Preview {
     MealView()
 }
+
+
 
 // Esto va en Models
 struct Nutrient: Identifiable {

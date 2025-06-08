@@ -14,10 +14,10 @@ struct MealCard: View {
         VStack(alignment: .leading, spacing: 8) {
             Image(meal.imageName)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
                 .frame(height: 180)
-                .clipped()
-                .cornerRadius(12)
+//                .clipped()
+//                .cornerRadius(12)
 
             HStack {
                 VStack(alignment: .leading) {
@@ -27,17 +27,23 @@ struct MealCard: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-                Spacer()
             }
+            .padding(.horizontal)
+            .padding(.vertical, 5)
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 4)
+        .background(){
+            RoundedRectangle(cornerRadius: 16)
+                   .fill(.ultraThinMaterial)
+                   .background(.gray.opacity(0.15))
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(radius: 5)
+        
+        
     }
 }
 
 
 #Preview {
-    MealDetailView(meal: meals[1])
+    MealCard(meal: meals[1])
 }
