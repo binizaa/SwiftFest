@@ -34,6 +34,7 @@ struct HomeView: View {
             
             CustomTabBar()
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     /// Custom Tab Bar
@@ -100,6 +101,6 @@ struct TabItem: View {
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }
 

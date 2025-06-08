@@ -19,6 +19,7 @@ struct ContentView: View {
                     HomeView()
                         .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .opacity))
                 } else {
+                    
                     StartView()
                         .transition(.asymmetric(insertion: .opacity, removal: .move(edge: .leading)))
                 }
