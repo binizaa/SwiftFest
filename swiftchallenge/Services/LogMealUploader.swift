@@ -10,7 +10,7 @@ import UIKit
 
 class LogMealUploader {
     private static let endpoint = "https://api.logmeal.com/v2/image/segmentation/complete/v1.0?language=spa"
-    private static let token = "85951b4a319cea3650f78c1d4438e334c23244fe"
+    private static let token = "eabbc26746788f9cbcf407465d4590165c1617a4"
 
     static func enviarImagen(_ imagen: UIImage, completion: @escaping ([AlimentoDetectado]) -> Void) {
         guard let url = URL(string: endpoint) else {
