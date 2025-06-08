@@ -2,7 +2,7 @@ import SwiftUI
 import CoreML
 import GoogleGenerativeAI
 
-struct ContentView: View {
+struct alimentosView: View {
     @State private var selectedImage: UIImage?
     @State private var isPickerPresented = false
     @State private var predictionLabel: String = ""
@@ -110,7 +110,7 @@ struct ContentView: View {
         let savedData = SavedIngredients(foodName: foodName, ingredients: ingredients)
         
         do {
-            let jsonData = try JSONEncoder().encode(savedData)
+            _ = try JSONEncoder().encode(savedData)
             if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 let fileURL = documentDirectory.appendingPathComponent("ingredients.json")
                 

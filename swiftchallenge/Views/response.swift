@@ -1,7 +1,14 @@
+//
+//  response.swift
+//  swiftchallenge
+//
+//  Created by Biniza Ruiz on 07/06/25.
+//
+
 import SwiftUI
 import PhotosUI
 
-struct ContentView: View {
+struct Response: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
 
@@ -24,18 +31,13 @@ struct ContentView: View {
             .disabled(selectedImage == nil)
         }
         .padding()
-
-        .onChange(of: selectedItem) {
+        .onChange(of: selectedItem) { newItem in
             Task {
-                if let data = try? await selectedItem?.loadTransferable(type: Data.self),
+                if let data = try? await newItem?.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
                 }
             }
         }
-
     }
-}
-#Preview {
-    ContentView()
 }
