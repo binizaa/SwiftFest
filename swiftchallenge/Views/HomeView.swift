@@ -17,21 +17,18 @@ struct HomeView: View {
             TabView(selection: $activeTab) {
                 MealView()
                     .tag(Tab.home)
-                    /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
                 
                 CaptureMealView()
                     .tag(Tab.register)
-                    /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
                 
-                mealUploader()
+                CaptureMealView()
                     .tag(Tab.profile)
                     .toolbar(.hidden, for: .tabBar)
                 
                 ChatBotView()
                     .tag(Tab.chat)
-                    /// Hiding Native Tab Bar
                     .toolbar(.hidden, for: .tabBar)
             }
             

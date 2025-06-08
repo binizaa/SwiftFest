@@ -57,7 +57,7 @@ struct alimentosView: View {
         }
         .padding()
         .sheet(isPresented: $isPickerPresented) {
-            ImagePicker(image: $selectedImage)
+            ImagePicker(image: $selectedImage, sourceType: .photoLibrary)
         }
     }
 

@@ -12,14 +12,29 @@ import SwiftUI
 }
 
 struct CameraView: View {
-
+    @State private var showCamera = false
+    @State private var selectedImage: UIImage?
 
     var body: some View {
         VStack {
-            Text("hola")
-            
+            if let selectedImage = selectedImage {
+                Image(uiImage: selectedImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+            } else {
+                Text("No se ha seleccionado imagen")
+                    .foregroundColor(.gray)
+            }
+
+            Button("Tomar Foto") {
+                showCamera = true
+            }
+            .padding()
         }
-        .padding()
+        .sheet(isPresented: $showCamera) {
+            ImagePicker(image: $selectedImage, sourceType: .camera)
+        }
     }
 }
 

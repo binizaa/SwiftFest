@@ -12,7 +12,7 @@ struct XYChart: View {
     var body: some View {
         VStack (spacing: 0){
             Text("Niveles de Glucosa")
-                .font(.title)
+                .font(.headline)
                 .fontWeight(.regular)
             
             Chart(glucoseData) { reading in

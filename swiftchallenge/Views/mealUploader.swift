@@ -8,27 +8,42 @@
 import SwiftUI
 import PhotosUI
 
+enum MetodoCaptura {
+    case camara, galeria
+}
+
 struct mealUploader: View {
+    let metodo: MetodoCaptura
+
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImage: UIImage? = nil
     @State private var cargando = false
     @State private var alimentosDetectados: [AlimentoDetectado] = []
+    @State private var mostrarCamera = false
 
     var body: some View {
         VStack(spacing: 20) {
             if let selectedImage = selectedImage {
                 Image(uiImage: selectedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 200)
+                       .resizable()
+                       .aspectRatio(contentMode: .fill)
+                       .frame(height: 250)
+                       .clipped()
+                       .cornerRadius(20)
+                       .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 20)
+                               .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+                       )
+                       .padding(.horizontal)
+                       .transition(.opacity)
+                       .animation(.easeInOut(duration: 0.3), value: selectedImage)
             }
 
-            PhotosPicker("Selecciona una imagen", selection: $selectedItem, matching: .images)
-
-            Button("Enviar a LogMeal") {
+            Button("Analizar") {
                 if let imagen = selectedImage {
                     cargando = true
-                    alimentosDetectados = []  // Limpia resultados anteriores
+                    alimentosDetectados = []
 
                     LogMealUploader.enviarImagen(imagen) { alimentos in
                         DispatchQueue.main.async {
@@ -57,6 +72,22 @@ struct mealUploader: View {
             }
         }
         .padding()
+        .sheet(isPresented: $mostrarCamera) {
+            ImagePicker(image: $selectedImage, sourceType: .camera)
+        }
+        .onAppear {
+            switch metodo {
+            case .camara:
+                mostrarCamera = true
+            case .galeria:
+                break
+    
+            }
+        }
+        .photosPicker(isPresented: Binding(
+            get: { metodo == .galeria && selectedImage == nil },
+            set: { _ in }
+        ), selection: $selectedItem, matching: .images)
         .onChange(of: selectedItem) {
             Task {
                 if let data = try? await selectedItem?.loadTransferable(type: Data.self),
@@ -70,5 +101,5 @@ struct mealUploader: View {
 }
 
 #Preview {
-    mealUploader()
+    mealUploader(metodo:.galeria)
 }

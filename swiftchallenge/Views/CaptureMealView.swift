@@ -15,9 +15,10 @@ struct CaptureMealView: View {
                 VStack(spacing: 20) {
                    
                     ForEach(optionsToCapture) { section in
-                        NavigationLink(destination: DetailView()) { // Aqui conenten todo xd
+                        NavigationLink(destination: mealUploader(metodo: metodoDesde(title: section.title))) {
                             HCard(selection: section)
                         }
+
                         .buttonStyle(.plain)
                     }
                 }
@@ -26,6 +27,15 @@ struct CaptureMealView: View {
         }
        
     }
+    
+    func metodoDesde(title: String) -> MetodoCaptura {
+        switch title {
+        case "Cámara": return .camara
+        case "Galería": return .galeria
+        default: return .galeria 
+        }
+    }
+
 }
 
 #Preview {
