@@ -11,16 +11,15 @@ import Charts
 struct PieChart: View {
     var body: some View {
         VStack (spacing: 0){
-            Text("Indice de Glucosaa")
-                .font(.title)
-                .fontWeight(.regular)
+            Text("Indice de Glucosa")
+                .font(.headline)
             
             Chart {
                 ForEach(mealSummary) { category in
                     SectorMark(
                         angle: .value("Cantidad", category.count),
-                        innerRadius: .ratio(0.7),
-                        angularInset: 2
+                        innerRadius: .ratio(0.5),
+                        angularInset: 6
                     )
                     .foregroundStyle(by: .value("Tipo", category.tag))
                 }

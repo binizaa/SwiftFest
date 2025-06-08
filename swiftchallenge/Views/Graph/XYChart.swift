@@ -13,7 +13,6 @@ struct XYChart: View {
         VStack (spacing: 0){
             Text("Niveles de Glucosa")
                 .font(.headline)
-                .fontWeight(.regular)
             
             Chart(glucoseData) { reading in
                 LineMark(
